@@ -1,0 +1,12 @@
+.course {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 0.8rem;
+	border: solid 2px blue;
+	border-radius: 12px;
+
+	&__header {
+		font-size: 1.6rem;
+	}
+}

@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 import './Login.scss';
 
 import { loginStudent } from '../../Services/Student.service';
+
+// Context
+import { TokenContext } from '../../context/TokenContext';
 
 const initialState = {
 	email: '',
@@ -9,7 +15,9 @@ const initialState = {
 };
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState(initialState);
+	const { setToken } = useContext(TokenContext);
 
 	const handleInputChange = (e) => {
 		setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -20,19 +28,25 @@ const Login = () => {
 
 		const response = await loginStudent(formData);
 
-		console.log(response);
+		if (response.startsWith('Bearer ')) {
+			toast.success(`Login Successful`);
+			localStorage.setItem('token', response);
 
-		localStorage.setItem('token', response);
+			setToken(response);
+			navigate('/');
+		} else {
+			toast.error(`Login Failed`);
+		}
 
 		setFormData(initialState);
 	};
 
 	return (
-		<div>
-			<h1>Login</h1>
-
-			<form action=''>
+		<div className='wrap'>
+			<form action='' className='login'>
+				<p className='login__header'>Login</p>
 				<input
+					className='login__input'
 					onChange={(e) => handleInputChange(e)}
 					name='email'
 					value={formData.email}
@@ -40,6 +54,7 @@ const Login = () => {
 					placeholder='Email...'
 				/>
 				<input
+					className='login__input'
 					onChange={(e) => handleInputChange(e)}
 					name='password'
 					value={formData.password}
@@ -47,7 +62,9 @@ const Login = () => {
 					placeholder='Password...'
 				/>
 
-				<button onClick={(e) => login(e)}>Login</button>
+				<button className='login__button' onClick={(e) => login(e)}>
+					Login
+				</button>
 			</form>
 		</div>
 	);

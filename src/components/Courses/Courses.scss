@@ -1,0 +1,11 @@
+.header {
+	font-size: 3rem;
+	text-align: center;
+}
+
+.courses {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	text-align: center;
+	gap: 24px;
+}
