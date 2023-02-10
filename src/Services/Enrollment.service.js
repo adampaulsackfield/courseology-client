@@ -15,3 +15,17 @@ export const getEnrollments = async () => {
 		console.log(`Error: ${err}`);
 	}
 };
+
+export const enrollCourse = async (id) => {
+	const options = {
+		headers: { Authorization: `${localStorage.getItem('token')}` },
+	};
+
+	try {
+		const response = await axios.get(`${URL}/${id}`, options);
+
+		return response.data;
+	} catch (err) {
+		console.log(`Error: ${err}`);
+	}
+};

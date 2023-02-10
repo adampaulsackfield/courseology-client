@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './Register.scss';
 
 import { registerStudent } from '../../Services/Student.service';
+import { toast } from 'react-toastify';
 
 const initialState = {
 	name: '',
@@ -19,56 +20,84 @@ const Register = () => {
 		}));
 	};
 
-	const onSubmit = async (e) => {
+	const register = async (e) => {
 		e.preventDefault();
+
+		if (formData.password !== formData.confirmPassword) {
+			return toast.warning('Passwords do not match');
+		}
+
+		if (
+			formData.name === '' ||
+			formData.email === '' ||
+			formData.password === ''
+		) {
+			return toast.warning('Please complete all required fields');
+		}
 
 		const response = await registerStudent(formData);
 
-		console.log(response);
+		if (response) {
+			toast.success('Successful Sign Up. Please login');
+		}
 
 		setFormData(initialState);
 	};
 
 	return (
-		<div>
-			<h1>Sign Up</h1>
+		<div className='wrap'>
+			<h1 className='header'>Courseology</h1>
 
-			<form>
+			<form action='' className='register'>
+				<p className='register__header'>Register</p>
 				<input
+					className='register__input'
 					onChange={(e) => handleInputChange(e)}
 					name='name'
-					type='text'
-					placeholder='Name...'
 					value={formData.name}
+					type='name'
+					placeholder='Name...'
 				/>
+
 				<input
+					className='register__input'
 					onChange={(e) => handleInputChange(e)}
 					name='email'
+					value={formData.email}
 					type='email'
 					placeholder='Email...'
-					value={formData.email}
 				/>
+
 				<input
+					className='register__input'
 					onChange={(e) => handleInputChange(e)}
 					name='interestedIn'
-					type='text'
-					placeholder='Interested In...'
 					value={formData.interestedIn}
+					type='interestedIn'
+					placeholder='Interested In...'
 				/>
+
 				<input
+					className='register__input'
 					onChange={(e) => handleInputChange(e)}
 					name='password'
+					value={formData.password}
 					type='password'
 					placeholder='Password...'
-					value={formData.password}
 				/>
+
 				<input
+					className='register__input'
+					onChange={(e) => handleInputChange(e)}
 					name='confirmPassword'
+					value={formData.confirmPassword}
 					type='password'
 					placeholder='Confirm Password...'
 				/>
 
-				<button onClick={(e) => onSubmit(e)}>Submit</button>
+				<button className='register__button' onClick={(e) => register(e)}>
+					Register
+				</button>
 			</form>
 		</div>
 	);

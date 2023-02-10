@@ -43,6 +43,8 @@ const Login = () => {
 
 	return (
 		<div className='wrap'>
+			<h1 className='header'>Courseology</h1>
+
 			<form action='' className='login'>
 				<p className='login__header'>Login</p>
 				<input

@@ -18,6 +18,7 @@ import Profile from './components/Profile/Profile';
 import { StudentContext } from './context/StudentContext';
 import { TokenContext } from './context/TokenContext';
 import Courses from './components/Courses/Courses';
+import Course from './components/Course/Course';
 
 const jwtToken = localStorage.getItem('token');
 
@@ -42,6 +43,7 @@ function App() {
 							<Route path='/login' element={<Login />} />
 							<Route path='/profile' element={<Profile />} />
 							<Route path='/courses' element={<Courses />} />
+							<Route path='/course/:id' element={<Course />} />
 						</Route>
 					</Routes>
 

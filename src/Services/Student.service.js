@@ -22,7 +22,7 @@ export const loginStudent = async (student) => {
 
 		return response.data;
 	} catch (err) {
-		console.log(`Error: ${err}`);
+		return 'Failed';
 	}
 };
 
